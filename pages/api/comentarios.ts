@@ -1,8 +1,13 @@
+import type { NextApiRequest, NextApiResponse } from 'next';
+
 let tasks = [
   { id: 1, title: "Aprender Axios", done: false },
 ];
 
-export default function handler(req, res) {
+export default function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   if (req.method === 'GET') {
     return res.status(200).json(tasks);
   }
