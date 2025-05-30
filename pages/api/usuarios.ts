@@ -11,6 +11,10 @@ export default function handler(
 ) {
 
   cors(res);
+  
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
 
   if (req.method === 'GET') {
     return res.status(200).json(usuarios);

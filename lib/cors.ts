@@ -3,7 +3,7 @@ import type { NextApiResponse } from "next";
 
 export function cors(res: NextApiResponse) {
   res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader("Access-Control-Allow-Origin", "*"); // O usa tu dominio en vez de '*'
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET,OPTIONS,PATCH,DELETE,POST,PUT"
