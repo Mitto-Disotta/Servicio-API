@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { cors } from "../../lib/cors";
 
-const usuarios = [
+let usuarios = [
   { id: 1, usuario: "Martín" },
 ];
 
@@ -11,7 +11,7 @@ export default function handler(
 ) {
 
   cors(res);
-  
+
   if (req.method === "OPTIONS") {
     return res.status(200).end();
   }
@@ -25,6 +25,12 @@ export default function handler(
     const nuevoUsuario = { id: usuarios.length + 1, usuario };
     usuarios.push(nuevoUsuario);
     return res.status(201).json(nuevoUsuario);
+  }
+
+  if (req.method === "DELETE") {
+    const id = parseInt(req.query.id as string);
+    usuarios = usuarios.filter((c) => c.id !== id);
+    return res.status(204).end();
   }
 
   return res.status(405).json({ error: 'Método no permitido' });
