@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-let tasks = [
+const tasks = [
   { id: 1, title: "Aprender Axios", done: false },
 ];
 
