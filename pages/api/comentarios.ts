@@ -1,13 +1,14 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { v4 as uuidv4 } from 'uuid';
 import { cors } from "../../lib/cors";
 
 let comentarios = [
-  { id: 1, comentario: "Aprendiendo Axios", usuario: "Martín" },
+  { id: uuidv4(), comentario: "Aprendiendo Axios", usuario: "Martín" },
 ];
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   cors(res);
-  
+
   if (req.method === "OPTIONS") {
     return res.status(200).end();
   }
@@ -19,7 +20,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
     const { usuario, comentario } = req.body;
     const nuevo = {
-      id: comentarios.length + 1,
+      id: uuidv4(),
       usuario,
       comentario,
     };
@@ -28,7 +29,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 
   if (req.method === "DELETE") {
-    const id = parseInt(req.query.id as string);
+    const id = req.query.id;
     comentarios = comentarios.filter((c) => c.id !== id);
     return res.status(204).end();
   }

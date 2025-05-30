@@ -1,8 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { v4 as uuidv4 } from 'uuid';
 import { cors } from "../../lib/cors";
 
 let usuarios = [
-  { id: 1, usuario: "Martín" },
+  { id: uuidv4(), usuario: "Martín" },
 ];
 
 export default function handler(
@@ -22,13 +23,13 @@ export default function handler(
 
   if (req.method === 'POST') {
     const { usuario } = req.body;
-    const nuevoUsuario = { id: usuarios.length + 1, usuario };
+    const nuevoUsuario = { id: uuidv4(), usuario };
     usuarios.push(nuevoUsuario);
     return res.status(201).json(nuevoUsuario);
   }
 
   if (req.method === "DELETE") {
-    const id = parseInt(req.query.id as string);
+    const id = req.query.id;
     usuarios = usuarios.filter((c) => c.id !== id);
     return res.status(204).end();
   }
