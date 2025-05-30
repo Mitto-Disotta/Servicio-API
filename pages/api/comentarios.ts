@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-const tasks = [
-  { id: 1, title: "Aprender Axios", done: false },
+const comentarios = [
+  { id: 1, comentario: "Aprendiendo Axios", usuario: "Martín" },
 ];
 
 export default function handler(
@@ -9,15 +9,15 @@ export default function handler(
   res: NextApiResponse
 ) {
   if (req.method === 'GET') {
-    return res.status(200).json(tasks);
+    return res.status(200).json(comentarios);
   }
 
   if (req.method === 'POST') {
-    const { title, done } = req.body;
-    const newTask = { id: tasks.length + 1, title, done: !!done };
-    tasks.push(newTask);
-    return res.status(201).json(newTask);
+    const { comentario, usuario } = req.body;
+    const nuevoComentario = { id: comentarios.length + 1, comentario, usuario };
+    comentarios.push(nuevoComentario);
+    return res.status(201).json(nuevoComentario);
   }
 
-  return res.status(405).json({ error: 'Method not allowed' });
+  return res.status(405).json({ error: 'Método no permitido' });
 }
