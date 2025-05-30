@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { cors } from "../../lib/cors";
 
 const usuarios = [
   { id: 1, usuario: "Martín" },
@@ -8,6 +9,9 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+
+  cors(res);
+
   if (req.method === 'GET') {
     return res.status(200).json(usuarios);
   }

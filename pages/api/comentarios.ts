@@ -1,23 +1,33 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiRequest, NextApiResponse } from "next";
+import { cors } from "../../lib/cors";
 
-const comentarios = [
+let comentarios = [
   { id: 1, comentario: "Aprendiendo Axios", usuario: "Martín" },
 ];
 
-export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  if (req.method === 'GET') {
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
+  cors(res);
+
+  if (req.method === "GET") {
     return res.status(200).json(comentarios);
   }
 
-  if (req.method === 'POST') {
-    const { comentario, usuario } = req.body;
-    const nuevoComentario = { id: comentarios.length + 1, comentario, usuario };
-    comentarios.push(nuevoComentario);
-    return res.status(201).json(nuevoComentario);
+  if (req.method === "POST") {
+    const { usuario, comentario } = req.body;
+    const nuevo = {
+      id: comentarios.length + 1,
+      usuario,
+      comentario,
+    };
+    comentarios.push(nuevo);
+    return res.status(201).json(nuevo);
   }
 
-  return res.status(405).json({ error: 'Método no permitido' });
+  if (req.method === "DELETE") {
+    const id = parseInt(req.query.id as string);
+    comentarios = comentarios.filter((c) => c.id !== id);
+    return res.status(204).end();
+  }
+
+  return res.status(405).end();
 }
